@@ -1,11 +1,11 @@
-# Todo App Spring Boot Thymeleaf REST jQuery
+# Demo Small Invoice Api
 
-A single page application by using JSON with jQuery.
+A demo project for the smallinvoice api component
 
 
 ## Overview
 
-We will implement simple Rest Api whioch is calling the smallinvoice api through the smallinvoice api component:
+We will implement simple Rest Api which is calling the smallinvoice api through the smallinvoice api component:
 
 [https://github.com/mbachmann/smallinvoice-api-parent](https://github.com/mbachmann/smallinvoice-api-parent)
 
