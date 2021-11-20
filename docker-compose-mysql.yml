@@ -14,7 +14,7 @@ services:
       SMALLINVOICE_URL: https://demo-api.smallinvoice.com
       SMALLINVOICE_CLIENT_ID: XNG74DQ3DAA2ZUV4TLWU
       SMALLINVOICE_CLIENT_SECRET: uhSBgyRASXmaNvemv3QXBEIjZsGY5574balf73lNa0PlSrNDsl02MUDYC6/YN6NbtKjE0kxvedtT+RHI
-      SMALLINVOICE_SCOPE: profile contact letter catalog invoice offer delivery_note order_confirmation project cost_unit working_hours activity effort contact_reminder configuration}
+      SMALLINVOICE_SCOPE: profile contact letter catalog invoice offer delivery_note order_confirmation project cost_unit working_hours activity effort contact_reminder configuration
 
       APP_DB_HOST: demo-smallinvoice-api-dbmysql8
       APP_DB_PORT: 3306
