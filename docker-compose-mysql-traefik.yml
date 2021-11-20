@@ -1,0 +1,86 @@
+
+version: '3'
+
+networks:
+  proxy:
+    external: true
+  internal:
+    external: false
+services:
+
+  demo-smallinvoice-api-mysql:
+    image: uportal/demo-smallinvoice-api:latest
+
+    restart: always
+    environment:
+      APP_NAME: Small Invoice Demo App with H2
+      ACTIVE_PROFILES: dev,mysql,smallinvoice
+      APP_URL: https://demo-smallinvoice-api.united-portal.com
+      SMALLINVOICE_URL: https://demo-api.smallinvoice.com
+      SMALLINVOICE_CLIENT_ID: XNG74DQ3DAA2ZUV4TLWU
+      SMALLINVOICE_CLIENT_SECRET: uhSBgyRASXmaNvemv3QXBEIjZsGY5574balf73lNa0PlSrNDsl02MUDYC6/YN6NbtKjE0kxvedtT+RHI
+      SMALLINVOICE_SCOPE: profile contact letter catalog invoice offer delivery_note order_confirmation project cost_unit working_hours activity effort contact_reminder configuration}
+
+      APP_DB_HOST: demo-smallinvoice-api-dbmysql8
+      APP_DB_PORT: 3306
+      APP_DB_NAME: demo-smallinvoice-api
+      APP_DB_USERNAME: root
+      APP_DB_PASSWORD: demo-smallinvoice-api
+    ports:
+      - 8080:8080
+    networks:
+      - internal
+      - proxy
+    labels:
+      - "traefik.backend=demo-smallinvoice-api"
+      - "traefik.frontend.rule=Host:demo-smallinvoice-api.united-portal.com"
+      - "traefik.docker.network=proxy"
+      - "traefik.port=8080"
+      - "traefik.enable=true"
+
+  demo-smallinvoice-api-adminer:
+    image: adminer:4.8.0
+    restart: always
+    ports:
+      - 9090:8080
+    environment:
+      ADMINER_DEFAULT_SERVER: demo-smallinvoice-api-dbmysql8
+    networks:
+      - internal
+      - proxy
+    labels:
+      - "traefik.backend=demo-smallinvoice-api-mysql"
+      - "traefik.frontend.rule=Host:demo-smallinvoice-api-mysql.united-portal.com"
+      - "traefik.docker.network=proxy"
+      - "traefik.port=8080"
+      - "traefik.enable=true"
+
+  demo-smallinvoice-api-dbmysql8:
+    image: mysql:8.0.23
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: demo-smallinvoice-api-dbmysql8
+    restart: always
+    cap_add:
+      - SYS_NICE
+    environment:
+      MYSQL_DATABASE: 'demo-smallinvoice-api'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'user'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: 'demo-smallinvoice-api'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'demo-smallinvoice-api'
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>, host port for using with mysql-workbench or dbeaver
+      - '33066:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - dbmysql8-demo-smallinvoice-api:/var/lib/mysql
+    networks:
+      - internal
+# Names our volume
+volumes:
+  dbmysql8-demo-smallinvoice-api:

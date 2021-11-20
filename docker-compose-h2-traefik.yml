@@ -1,0 +1,30 @@
+version: '2'
+
+
+networks:
+  proxy:
+    external: true
+
+services:
+
+  demo-smallinvoice-api-h2:
+    image: uportal/demo-smallinvoice-api:latest
+    container_name: demo-smallinvoice-api-h2
+    labels:
+      - "traefik.backend=todo-h2"
+      - "traefik.frontend.rule=Host:demo-smallinvoice-api.united-portal.com"
+      - "traefik.docker.network=proxy"
+      - "traefik.port=8080"
+      - "traefik.enable=true"
+
+    restart: always
+    networks:
+      - proxy
+    environment:
+      APP_NAME: Small Invoice Demo App with H2
+      ACTIVE_PROFILES: dev,h2,smallinvoice
+      APP_URL: https://demo-smallinvoice-api.united-portal.com
+      SMALLINVOICE_URL: https://demo-api.smallinvoice.com
+      SMALLINVOICE_CLIENT_ID: XNG74DQ3DAA2ZUV4TLWU
+      SMALLINVOICE_CLIENT_SECRET: uhSBgyRASXmaNvemv3QXBEIjZsGY5574balf73lNa0PlSrNDsl02MUDYC6/YN6NbtKjE0kxvedtT+RHI
+      SMALLINVOICE_SCOPE: profile contact letter catalog invoice offer delivery_note order_confirmation project cost_unit working_hours activity effort contact_reminder configuration}
