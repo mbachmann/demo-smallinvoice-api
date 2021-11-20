@@ -1,5 +1,7 @@
 # Demo Small Invoice Api
 
+[https://github.com/mbachmann/demo-smallinvoice-api](https://github.com/mbachmann/demo-smallinvoice-api)
+
 A demo project for the smallinvoice api component
 
 
